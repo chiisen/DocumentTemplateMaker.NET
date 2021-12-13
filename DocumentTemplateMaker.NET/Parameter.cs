@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DocumentTemplateMaker.NET
+﻿namespace DocumentTemplateMaker.NET
 {
     public class Parameter
     {
@@ -11,5 +7,7 @@ namespace DocumentTemplateMaker.NET
         public string[] OutputPath;
         public string StartDate;
         public string EndDate;
+        public string[] KeyWords;
     }
+        
 }

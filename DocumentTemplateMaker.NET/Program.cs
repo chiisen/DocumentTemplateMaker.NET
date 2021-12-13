@@ -1,5 +1,7 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DocumentTemplateMaker.NET
 {
@@ -9,9 +11,10 @@ namespace DocumentTemplateMaker.NET
         {
             // 讀檔案
             string parameter_ = System.IO.File.ReadAllText(@".\Parameter.json");
-
-            Parameter desc_ = JsonConvert.DeserializeObject<Parameter>(parameter_);
-            switch(desc_.TempType)
+            List<Parameter> descArray_ = JsonConvert.DeserializeObject<List<Parameter>>(parameter_);
+            Dictionary<string, Parameter> dic_ = descArray_.ToDictionary(x => x.TempType, x => x);
+            Parameter desc_ = dic_[args[0]];
+            switch (desc_.TempType)
             {
                 case "DateRange":
                     DateRange dateRange_ = new DateRange();
@@ -19,6 +22,10 @@ namespace DocumentTemplateMaker.NET
                     {
                         dateRange_.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate);
                     }
+                    break;
+                case "JsonMap":
+                    JsonMap jsonMap_ = new JsonMap();
+                    jsonMap_.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0]);
                     break;
             }            
 

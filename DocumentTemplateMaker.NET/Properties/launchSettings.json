@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DocumentTemplateMaker.NET": {
+      "commandName": "Project",
+      "commandLineArgs": "JsonMap"
+    }
+  }
+}

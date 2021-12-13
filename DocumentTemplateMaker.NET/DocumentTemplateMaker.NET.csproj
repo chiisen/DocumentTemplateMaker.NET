@@ -10,10 +10,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="DocumentTemplate-1.sql">
+    <None Update="DocumentTemplate\DocumentTemplate-1.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="DocumentTemplate-2.sql">
+    <None Update="DocumentTemplate\DocumentTemplate-2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DocumentTemplate\INSERT.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DocumentTemplate\json.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Parameter.json">

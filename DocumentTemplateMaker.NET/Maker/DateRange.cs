@@ -5,6 +5,13 @@ namespace DocumentTemplateMaker.NET
 {
     public class DateRange
     {
+        public DateRange()
+        {
+            // 砍擋
+            Helper helper_ = new Helper();
+            helper_.DeleteAll(".\\output\\");
+        }
+
         public void Maker(string tempFileName, string outputFileName, string startDate, string endDate)
         {
             // 讀檔案
