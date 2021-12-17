@@ -8,6 +8,7 @@
         public string StartDate;
         public string EndDate;
         public string[] KeyWords;
+        public string[] ReplaceWords;
     }
         
 }

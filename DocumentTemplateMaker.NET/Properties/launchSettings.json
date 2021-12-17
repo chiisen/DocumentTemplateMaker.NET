@@ -2,7 +2,7 @@
   "profiles": {
     "DocumentTemplateMaker.NET": {
       "commandName": "Project",
-      "commandLineArgs": "JsonMap"
+      "commandLineArgs": "Replace"
     }
   }
 }

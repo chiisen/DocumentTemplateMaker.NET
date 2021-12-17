@@ -9,7 +9,13 @@
   {
     "TempType": "JsonMap",
     "SrcTempPath": [ ".\\DocumentTemplate\\json.txt" ],
+    "OutputPath": [ ".\\output\\jsonOutput.txt" ]
+  },
+  {
+    "TempType": "Replace",
+    "SrcTempPath": [ ".\\DocumentTemplate\\Replace.txt" ],
     "OutputPath": [ ".\\output\\jsonOutput.txt" ],
-    "KeyWords": [ "Cid", "Wid" ]
+    "KeyWords": [ "#Wid_Parent#", "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#", "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#", "#DBId#", "#ClientType#", "#HallId#" ],
+    "ReplaceWords": [ "NULL", "0", "NULL", "1", "0", "Testmax", "NMmojricWEyG", "0", "0", "0", "0", "", "0", "0", "A0cC0dWyt1iy" ]
   }
 ]

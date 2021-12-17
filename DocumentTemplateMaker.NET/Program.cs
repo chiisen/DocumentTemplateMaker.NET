@@ -27,6 +27,10 @@ namespace DocumentTemplateMaker.NET
                     JsonMap jsonMap_ = new JsonMap();
                     jsonMap_.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0]);
                     break;
+                case "Replace":
+                    Replace replace_ = new Replace();
+                    replace_.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
+                    break;
             }            
 
             Console.WriteLine("程式結束");
