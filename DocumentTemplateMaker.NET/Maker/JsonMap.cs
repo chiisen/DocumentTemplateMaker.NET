@@ -10,6 +10,8 @@ namespace DocumentTemplateMaker.NET
         {
             // 讀檔案
             string text = System.IO.File.ReadAllText(tempFileName);
+            text = text.Replace(" ", "");
+            text = text.Replace("\r\n", "");
 
             // 砍擋
             Helper helper_ = new Helper();
