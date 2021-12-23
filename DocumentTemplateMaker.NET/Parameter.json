@@ -2,10 +2,10 @@
   {
     "TempType": "DateRange",
     "SrcTempPath": [ ".\\DocumentTemplate\\DocumentTemplate-1.sql", ".\\DocumentTemplate\\DocumentTemplate-2.sql" ],
-    "OutputPath": [ ".\\output\\alter#StartMonth##StartDay#-#EndMonth##EndDay#-1.sql", ".\\output\\alter#StartMonth##StartDay#-#EndMonth##EndDay#-2.sql" ],
+    "OutputPath": [ ".\\output\\alter#StartMonth##StartDay##-##EndMonth##EndDay#-1.sql", ".\\output\\alter#StartMonth##StartDay##-##EndMonth##EndDay#-2.sql" ],
     "StartDate": "2021-08-01 00:00:00",
     "EndDate": "2021-08-15 00:00:00",
-    "Offset":  3
+    "Offset":  1
   },
   {
     "TempType": "JsonMap",

@@ -45,6 +45,8 @@ namespace DocumentTemplateMaker.NET
 
                     fileName = fileName.Replace("#EndMonth#", offset_.Month.ToString("00"));
                     fileName = fileName.Replace("#EndDay#", offset_.Day.ToString("00"));
+
+                    fileName = fileName.Replace("#-#", "-");                    
                 }
                 else
                 {
@@ -60,6 +62,8 @@ namespace DocumentTemplateMaker.NET
 
                     fileName = fileName.Replace("#EndMonth#", "");
                     fileName = fileName.Replace("#EndDay#", "");
+
+                    fileName = fileName.Replace("#-#", "");
                 }                
 
                 System.IO.File.WriteAllText(fileName, newText);
