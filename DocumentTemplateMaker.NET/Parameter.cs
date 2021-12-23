@@ -9,6 +9,7 @@
         public string EndDate;
         public string[] KeyWords;
         public string[] ReplaceWords;
+        public int Offset;
     }
         
 }

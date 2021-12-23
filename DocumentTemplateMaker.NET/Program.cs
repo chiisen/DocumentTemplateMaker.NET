@@ -20,7 +20,7 @@ namespace DocumentTemplateMaker.NET
                     DateRange dateRange_ = new DateRange();
                     for (int i = 0; i < desc_.SrcTempPath.Length; ++i)
                     {
-                        dateRange_.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate);
+                        dateRange_.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate, desc_.Offset);
                     }
                     break;
                 case "JsonMap":
