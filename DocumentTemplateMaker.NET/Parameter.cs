@@ -10,6 +10,7 @@
         public string[] KeyWords;
         public string[] ReplaceWords;
         public int Offset;
+        public string OffsetUnit;
     }
         
 }
