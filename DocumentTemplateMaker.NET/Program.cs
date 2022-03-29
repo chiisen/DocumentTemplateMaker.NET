@@ -5,10 +5,26 @@ using System.Linq;
 
 namespace DocumentTemplateMaker.NET
 {
+    /// <summary>
+    /// 主程式
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
         {
+            if (args == null)
+            {
+                Console.WriteLine($"沒有傳入參數");
+                Console.ReadKey();
+                return;
+            }
+            if (args.Length == 0)
+            {
+                Console.WriteLine($"沒有傳入參數 args.Length == {args.Length}");
+                Console.ReadKey();
+                return;
+            }
+
             // 讀檔案
             string parameter_ = System.IO.File.ReadAllText(@".\Parameter.json");
             List<Parameter> descArray_ = JsonConvert.DeserializeObject<List<Parameter>>(parameter_);
@@ -17,21 +33,18 @@ namespace DocumentTemplateMaker.NET
             switch (desc_.TempType)
             {
                 case "DateRange":
-                    DateRange dateRange_ = new DateRange();
                     for (int i = 0; i < desc_.SrcTempPath.Length; ++i)
                     {
-                        dateRange_.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate, desc_.Offset, desc_.OffsetUnit);
+                        DateRange.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate, desc_.Offset, desc_.OffsetUnit);
                     }
                     break;
                 case "JsonMap":
-                    JsonMap jsonMap_ = new JsonMap();
-                    jsonMap_.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0]);
+                    JsonMap.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0]);
                     break;
                 case "Replace":
-                    Replace replace_ = new Replace();
-                    replace_.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
+                    Replace.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
                     break;
-            }            
+            }
 
             Console.WriteLine("程式結束");
             Console.ReadKey();

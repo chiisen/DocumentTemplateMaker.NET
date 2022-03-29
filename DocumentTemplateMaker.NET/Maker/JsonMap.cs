@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DocumentTemplateMaker.NET
 {
     public class JsonMap
     {
-        public void Maker(string tempFileName, string outputFileName)
+        public static void Maker(string tempFileName, string outputFileName)
         {
             // 讀檔案
             string text = System.IO.File.ReadAllText(tempFileName);
@@ -14,11 +13,10 @@ namespace DocumentTemplateMaker.NET
             text = text.Replace("\r\n", "");
 
             // 砍擋
-            Helper helper_ = new Helper();
-            helper_.DeleteAll(".\\output\\");
+            Helper.DeleteAll(".\\output\\");
 
             string[] lines_ = text.Split(',');
-            Dictionary<string, string> map_ = new Dictionary<string, string>();
+            Dictionary<string, string> map_ = new();
             foreach (string line_ in lines_)
             {
                 if (line_.Contains(':'))
@@ -35,7 +33,7 @@ namespace DocumentTemplateMaker.NET
                         string[] spliteLine_ = newLine_.Split('}');
                         newLine_ = spliteLine_[0];
                     }
-                    
+
                     string[] mapLine_ = newLine_.Split(':');
                     if (map_.ContainsKey(mapLine_[0]))
                     {
@@ -52,9 +50,9 @@ namespace DocumentTemplateMaker.NET
             foreach (KeyValuePair<string, string> item in map_)
             {
                 string newLine = "";
-                if (int.TryParse(item.Value, out int n) 
+                if (int.TryParse(item.Value, out int n)
                     || float.TryParse(item.Value, out float f)
-                    || item.Value.ToLower() == "false" 
+                    || item.Value.ToLower() == "false"
                     || item.Value.ToLower() == "true")
                 {
                     newLine = string.Format("\"{0}\" : {1}\r\n", item.Key, item.Value);

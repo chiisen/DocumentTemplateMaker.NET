@@ -3,29 +3,28 @@ using System.Collections.Generic;
 
 namespace DocumentTemplateMaker.NET
 {
+    /// <summary>
+    /// 依據指定間格的時間範圍產生範型文件
+    /// </summary>
     public class DateRange
     {
         public DateRange()
         {
             // 砍擋
-            Helper helper_ = new Helper();
-            helper_.DeleteAll(".\\output\\");
+            Helper.DeleteAll(".\\output\\");
         }
 
-        public DateTime AddOffset(DateTime dt, int offSet, string offSetUnit)
+        public static DateTime AddOffset(DateTime dt, int offSet, string offSetUnit)
         {
-            switch(offSetUnit)
+            return offSetUnit switch
             {
-                case "Day":
-                    return dt.AddDays(offSet);
-                case "Month":
-                    return dt.AddMonths(offSet);
-                default:
-                    return dt.AddDays(offSet);
-            }
+                "Day" => dt.AddDays(offSet),
+                "Month" => dt.AddMonths(offSet),
+                _ => dt.AddDays(offSet),
+            };
         }
 
-        public DateTime AddOffsetDay(DateTime dt, int offSet, string offSetUnit)
+        public static DateTime AddOffsetDay(DateTime dt, int offSet, string offSetUnit)
         {
             switch (offSetUnit)
             {
@@ -39,7 +38,14 @@ namespace DocumentTemplateMaker.NET
             }
         }
 
-        public void DataFormatByMonth(string fileName, string newText, DateTime dt, DateTime offsetDt)
+        /// <summary>
+        /// 取代指定的時間資料
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="newText"></param>
+        /// <param name="dt"></param>
+        /// <param name="offsetDt"></param>
+        public static void ReplaceByMonth(string fileName, string newText, DateTime dt, DateTime offsetDt)
         {
             newText = newText.Replace("#StartYear#", dt.Year.ToString("0000"));
             newText = newText.Replace("#StartMonth#", dt.Month.ToString("00"));
@@ -63,7 +69,7 @@ namespace DocumentTemplateMaker.NET
             System.IO.File.WriteAllText(fileName, newText);
         }
 
-        public void DataFormatByDay(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt)
+        public static void ReplaceByDay(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt)
         {
             if (offSet > 1)
             {
@@ -111,25 +117,25 @@ namespace DocumentTemplateMaker.NET
             System.IO.File.WriteAllText(fileName, newText);
         }
 
-        public void DataFormat(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt, string offSetUnit)
+        public static void DataFormat(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt, string offSetUnit)
         {
             switch (offSetUnit)
             {
                 case "Month":
-                    DataFormatByMonth(fileName, newText, dt, offsetDt);
+                    ReplaceByMonth(fileName, newText, dt, offsetDt);
                     break;
                 case "Day":
-                    DataFormatByDay(fileName, newText, dt, offSet, offsetDt);
+                    ReplaceByDay(fileName, newText, dt, offSet, offsetDt);
                     break;
             }
         }
 
-        public void Maker(string tempFileName, string outputFileName, string startDate, string endDate, int offSet, string offSetUnit)
+        public static void Maker(string tempFileName, string outputFileName, string startDate, string endDate, int offSet, string offSetUnit)
         {
             // 讀檔案
             string text = System.IO.File.ReadAllText(tempFileName);
 
-            var dates = new List<DateTime>();
+            List<DateTime> dates = new();
 
             DateTime start = Convert.ToDateTime(startDate);
             DateTime end = Convert.ToDateTime(endDate);

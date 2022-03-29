@@ -1,5 +1,8 @@
 ﻿namespace DocumentTemplateMaker.NET
 {
+    /// <summary>
+    /// 儲存參數內容的類別
+    /// </summary>
     public class Parameter
     {
         public string TempType;
@@ -12,5 +15,5 @@
         public int Offset;
         public string OffsetUnit;
     }
-        
+
 }
