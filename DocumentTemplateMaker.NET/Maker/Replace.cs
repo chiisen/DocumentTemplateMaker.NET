@@ -1,30 +1,30 @@
 ﻿using System;
 
-namespace DocumentTemplateMaker.NET
+// C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
+namespace DocumentTemplateMaker.NET;
+
+public class Replace
 {
-    public class Replace
+    public static void Maker(string tempFileName, string outputFileName, Parameter para)
     {
-        public static void Maker(string tempFileName, string outputFileName, Parameter para)
+        // 讀檔案
+        string text = System.IO.File.ReadAllText(tempFileName);
+
+        // 砍擋
+        Helper.DeleteAll(".\\output\\");
+
+        if (para.KeyWords.Length != para.ReplaceWords.Length)
         {
-            // 讀檔案
-            string text = System.IO.File.ReadAllText(tempFileName);
-
-            // 砍擋
-            Helper.DeleteAll(".\\output\\");
-
-            if (para.KeyWords.Length != para.ReplaceWords.Length)
-            {
-                Console.WriteLine("[ERROR] 參數數量不相等!");
-                return;
-            }
-
-            for (int i = 0; i < para.KeyWords.Length; ++i)
-            {
-                text = text.Replace(para.KeyWords[i], para.ReplaceWords[i]);
-            }
-
-            // 寫檔案
-            System.IO.File.WriteAllText(outputFileName, text);
+            Console.WriteLine("[ERROR] 參數數量不相等!");
+            return;
         }
+
+        for (int i = 0; i < para.KeyWords.Length; ++i)
+        {
+            text = text.Replace(para.KeyWords[i], para.ReplaceWords[i]);
+        }
+
+        // 寫檔案
+        System.IO.File.WriteAllText(outputFileName, text);
     }
 }
