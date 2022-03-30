@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Serilog;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
 namespace DocumentTemplateMaker.NET;
@@ -25,6 +26,22 @@ class Program
             Console.ReadKey();
             return;
         }
+
+        Log.Logger = new LoggerConfiguration()
+        .MinimumLevel.Verbose() // 設定最低顯示層級   預設: Information
+        .WriteTo.Console() // 輸出到 指令視窗
+        .WriteTo.File("log-.log",
+            rollingInterval: RollingInterval.Day, // 每天一個檔案
+            outputTemplate: "{Timestamp:HH:mm:ss} [{Level:u5}] {Message:lj}{NewLine}{Exception}"
+        ) // 輸出到檔案 檔名範例: log-20211005.log
+        .CreateLogger();
+
+        Log.Verbose("Hello");
+        Log.Debug("Hello");
+        Log.Information("Hello");
+        Log.Warning("Hello");
+        Log.Error("Hello");
+        Log.Fatal("Hello");
 
         // 讀檔案
         string parameter_ = System.IO.File.ReadAllText(@".\Parameter.json");
@@ -50,8 +67,11 @@ class Program
                 break;
         }
 
-        Console.WriteLine("程式結束");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine("程式結束，按任何鍵結束。");
+        Console.ResetColor();
         Console.ReadKey();
 
+        Log.CloseAndFlush();
     }
 }

@@ -171,7 +171,16 @@ public class DateRange
 
             bool isAddDays = CheckAddDayAndFixIt(offSetUnit, ref offsetDt_);
 
-            Console.WriteLine(dt + " ~ " + offsetDt_);
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(dt);
+
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.Write(" ~ ");
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write(offsetDt_);
+            Console.Write('\n');
+            Console.ResetColor();
 
             ReplaceData(outputFileName, (string)text.Clone(), dt, offSet, offsetDt_, offSetUnit);
 
