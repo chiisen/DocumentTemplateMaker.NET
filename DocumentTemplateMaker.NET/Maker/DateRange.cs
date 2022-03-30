@@ -155,15 +155,11 @@ public class DateRange
         // 讀檔案
         string text = System.IO.File.ReadAllText(tempFileName);
 
-        List<DateTime> dates = new();
-
         DateTime start = Convert.ToDateTime(startDate);
         DateTime end = Convert.ToDateTime(endDate);
 
         for (var dt = start; dt <= end; dt = AddOffset(dt, offSet, offSetUnit))
         {
-            dates.Add(dt);
-
             DateTime offsetDt_ = AddOffsetDay(dt, offSet, offSetUnit, end);
 
             bool isAddDays = CheckAddDayAndFixIt(offSetUnit, ref offsetDt_);
