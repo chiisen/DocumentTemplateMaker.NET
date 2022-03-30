@@ -9,12 +9,6 @@ namespace DocumentTemplateMaker.NET;
 /// </summary>
 public class DateRange
 {
-    public DateRange()
-    {
-        // 砍擋
-        Helper.DeleteAll(".\\output\\");
-    }
-
     public static DateTime AddOffset(DateTime dt, int offSet, string offSetUnit)
     {
         return offSetUnit switch
@@ -25,12 +19,17 @@ public class DateRange
         };
     }
 
-    public static DateTime AddOffsetDay(DateTime dt, int offSet, string offSetUnit)
+    public static DateTime AddOffsetDay(DateTime dt, int offSet, string offSetUnit, DateTime end)
     {
         switch (offSetUnit)
         {
             case "Day":
-                return dt.AddDays(offSet - 1);
+                DateTime newDate = dt.AddDays(offSet - 1);
+                if(newDate > end)// 超過最後一天，改成最後一天
+                {
+                    newDate = end;
+                }
+                return newDate;
             case "Month":
                 DateTime dt_ = dt.AddMonths(offSet);
                 return dt_.AddDays(-1);
@@ -78,7 +77,7 @@ public class DateRange
             newText = newText.Replace("#StartMonth#", dt.Month.ToString("00"));
             newText = newText.Replace("#StartDay#", dt.Day.ToString("00"));
 
-            newText = newText.Replace("#EndYear#", dt.Year.ToString("0000"));
+            newText = newText.Replace("#EndYear#", offsetDt.Year.ToString("0000"));
             newText = newText.Replace("#EndMonth#", offsetDt.Month.ToString("00"));
             newText = newText.Replace("#EndDay#", offsetDt.Day.ToString("00"));
 
@@ -118,7 +117,7 @@ public class DateRange
         System.IO.File.WriteAllText(fileName, newText);
     }
 
-    public static void DataFormat(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt, string offSetUnit)
+    public static void ReplaceData(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt, string offSetUnit)
     {
         switch (offSetUnit)
         {
@@ -129,6 +128,26 @@ public class DateRange
                 ReplaceByDay(fileName, newText, dt, offSet, offsetDt);
                 break;
         }
+    }
+
+    /// <summary>
+    /// //每月最後是31號改成31日
+    /// </summary>
+    /// <param name="offSetUnit">只判斷 "Day"</param>
+    /// <param name="offsetDt">區段內的最後一天</param>
+    /// <returns></returns>
+    private static bool CheckAddDayAndFixIt(string offSetUnit, ref DateTime offsetDt)
+    {
+        if (offSetUnit == "Day" && offsetDt.Day == 30)
+        {
+            DateTime newDt_ = offsetDt.AddDays(1);
+            if (newDt_.Month == offsetDt.Month)
+            {
+                offsetDt = newDt_;
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void Maker(string tempFileName, string outputFileName, string startDate, string endDate, int offSet, string offSetUnit)
@@ -145,11 +164,18 @@ public class DateRange
         {
             dates.Add(dt);
 
-            DateTime offsetDt_ = AddOffsetDay(dt, offSet, offSetUnit);
+            DateTime offsetDt_ = AddOffsetDay(dt, offSet, offSetUnit, end);
+
+            bool isAddDays = CheckAddDayAndFixIt(offSetUnit, ref offsetDt_);
 
             Console.WriteLine(dt + " ~ " + offsetDt_);
 
-            DataFormat(outputFileName, (string)text.Clone(), dt, offSet, offsetDt_, offSetUnit);
+            ReplaceData(outputFileName, (string)text.Clone(), dt, offSet, offsetDt_, offSetUnit);
+
+            if(isAddDays)
+            {
+                dt = dt.AddDays(1);
+            }
         }
     }
 }

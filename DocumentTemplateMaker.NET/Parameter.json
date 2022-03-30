@@ -3,9 +3,9 @@
     "TempType": "DateRange",
     "SrcTempPath": [ ".\\DocumentTemplate\\DocumentTemplate-1.sql", ".\\DocumentTemplate\\DocumentTemplate-2.sql" ],
     "OutputPath": [ ".\\output\\alter#StartYear##StartMonth##StartDay##-##EndYear##EndMonth##EndDay#-1.sql", ".\\output\\alter#StartYear##StartMonth##StartDay##-##EndYear##EndMonth##EndDay#-2.sql" ],
-    "StartDate": "2020-12-01 00:00:00",
-    "EndDate": "2020-12-02 00:00:00",
-    "Offset": 2,
+    "StartDate": "2021-10-01 00:00:00",
+    "EndDate": "2022-04-30 00:00:00",
+    "Offset": 10,
     "OffsetUnit": "Day"
   },
   {

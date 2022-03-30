@@ -34,6 +34,9 @@ class Program
         switch (desc_.TempType)
         {
             case "DateRange":
+                // 砍擋
+                Helper.DeleteAll(".\\output\\");
+
                 for (int i = 0; i < desc_.SrcTempPath.Length; ++i)
                 {
                     DateRange.Maker(desc_.SrcTempPath[i], desc_.OutputPath[i], desc_.StartDate, desc_.EndDate, desc_.Offset, desc_.OffsetUnit);
