@@ -73,6 +73,13 @@ public class DateRange
     {
         if (offSet > 1)
         {
+            // 特例->日期往後一天
+            DateTime newDate_ = offsetDt.AddDays(1);
+            newText = newText.Replace("#AfterEndYear#", newDate_.Year.ToString("0000"));
+            newText = newText.Replace("#AfterEndMonth#", newDate_.Month.ToString("00"));
+            newText = newText.Replace("#AfterEndDay#", newDate_.Day.ToString("00"));
+
+
             newText = newText.Replace("#StartYear#", dt.Year.ToString("0000"));
             newText = newText.Replace("#StartMonth#", dt.Month.ToString("00"));
             newText = newText.Replace("#StartDay#", dt.Day.ToString("00"));

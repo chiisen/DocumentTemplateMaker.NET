@@ -1,5 +1,5 @@
 SET @start_time := '#StartYear#-#StartMonth#-#StartDay# 00:00:00';
-SET @end_time := '#EndYear#-#EndMonth#-#EndDay# 23:59:59';
+SET @end_time := '#AfterEndYear#-#AfterEndMonth#-#AfterEndDay# 00:00:00';
 
  
 DELETE FROM wagers_1.user_revenue_player WHERE AccountDate >= @start_time AND AccountDate < @end_time;
