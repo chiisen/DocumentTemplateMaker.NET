@@ -19,5 +19,12 @@
     "OutputPath": [ ".\\output\\jsonOutput.txt" ],
     "KeyWords": [ "#Wid_Parent#", "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#", "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#", "#DBId#", "#ClientType#", "#HallId#" ],
     "ReplaceWords": [ "NULL", "0", "NULL", "1", "0", "Testmax", "NMmojricWEyG", "0", "0", "0", "0", "", "0", "0", "A0cC0dWyt1iy" ]
+  },
+  {
+    "TempType": "ReplaceJsonMap",
+    "SrcTempPath": [ ".\\DocumentTemplate\\ReplaceJsonMap.txt" ],
+    "OutputPath": [ ".\\output\\" ],
+    "KeyWords": [ "#Wid_Parent#", "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#", "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#", "#DBId#", "#ClientType#", "#HallId#" ],
+    "ReplaceWords": [ "NULL", "0", "NULL", "1", "0", "Testmax", "NMmojricWEyG", "0", "0", "0", "0", "", "0", "0", "A0cC0dWyt1iy" ]
   }
 ]

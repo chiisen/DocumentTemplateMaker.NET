@@ -6,7 +6,7 @@ namespace DocumentTemplateMaker.NET;
 
 public class JsonMap
 {
-    public static void Maker(string tempFileName, string outputFileName)
+    public static void Maker(string tempFileName, string outputFileName, bool deleteAll = true)
     {
         // 讀檔案
         string text = System.IO.File.ReadAllText(tempFileName);
@@ -14,7 +14,10 @@ public class JsonMap
         text = text.Replace("\r\n", "");
 
         // 砍擋
-        Helper.DeleteAll(".\\output\\");
+        if (deleteAll)
+        {
+            Helper.DeleteAll(".\\output\\");
+        }
 
         string[] lines_ = text.Split(',');
         Dictionary<string, string> map_ = new();
@@ -80,6 +83,6 @@ public class JsonMap
         }
 
         // 寫檔案
-        System.IO.File.WriteAllText(".\\output\\INSERT-1.sql", sqlText);
+        System.IO.File.WriteAllText(outputFileName.Replace(".txt", ".sql"), sqlText);
     }
 }

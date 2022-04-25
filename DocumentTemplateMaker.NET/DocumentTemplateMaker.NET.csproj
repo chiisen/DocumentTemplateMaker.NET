@@ -28,6 +28,9 @@
     <None Update="DocumentTemplate\Replace.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="DocumentTemplate\ReplaceJsonMap.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Parameter.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

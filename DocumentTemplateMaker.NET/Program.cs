@@ -65,6 +65,9 @@ class Program
             case "Replace":
                 Replace.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
                 break;
+            case "ReplaceJsonMap":
+                ReplaceJsonMap.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
+                break;
         }
 
         Console.ForegroundColor = ConsoleColor.Blue;
