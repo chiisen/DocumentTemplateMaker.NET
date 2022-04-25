@@ -10,7 +10,7 @@ public class JsonMap
     {
         // 讀檔案
         string text = System.IO.File.ReadAllText(tempFileName);
-        text = text.Replace(" ", "");
+        //text = text.Replace(" ", "");
         text = text.Replace("\r\n", "");
 
         // 砍擋
@@ -38,15 +38,43 @@ public class JsonMap
                     newLine_ = spliteLine_[0];
                 }
 
-                string[] mapLine_ = newLine_.Split(':');
-                if (map_.ContainsKey(mapLine_[0]))
+                string[] mapLine_ = null;
+                if (newLine_.Contains("IP:::"))
                 {
-                    Console.WriteLine(mapLine_[0] + " 重複了");
+                    if (map_.ContainsKey("IP"))
+                    {
+                        Console.WriteLine("IP 重複了");
+                    }
+                    else
+                    {
+                        string ip_ = newLine_.Remove(0, 3);
+                        map_.Add("IP", ip_);
+                    }
+                }
+                else if (newLine_.Contains("AddDate:"))
+                {
+                    if (map_.ContainsKey("AddDate"))
+                    {
+                        Console.WriteLine("AddDate 重複了");
+                    }
+                    else
+                    {
+                        string date_ = newLine_.Remove(0, 8);
+                        map_.Add("AddDate", date_);
+                    }
                 }
                 else
                 {
-                    map_.Add(mapLine_[0], mapLine_[1]);
-                }
+                    mapLine_ = newLine_.Split(':');
+                    if (map_.ContainsKey(mapLine_[0]))
+                    {
+                        Console.WriteLine(mapLine_[0] + " 重複了");
+                    }
+                    else
+                    {
+                        map_.Add(mapLine_[0], mapLine_[1]);
+                    }
+                }                
             }
         }
 
@@ -75,14 +103,26 @@ public class JsonMap
 
 
         // 讀檔案
-        string sqlText = System.IO.File.ReadAllText(".\\DocumentTemplate\\INSERT.sql");
+        string sqlText = System.IO.File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
         foreach (KeyValuePair<string, string> item in map_)
         {
             string keyword_ = string.Format("#{0}#", item.Key);
-            sqlText = sqlText.Replace(keyword_, item.Value);
+            
+
+            if (int.TryParse(item.Value, out int n)
+                || float.TryParse(item.Value, out float f)
+                || item.Value.ToLower() == "false"
+                || item.Value.ToLower() == "true")
+            {
+                sqlText = sqlText.Replace(keyword_, item.Value);
+            }
+            else
+            {
+                sqlText = sqlText.Replace(keyword_, '"' + item.Value + '"');
+            }
         }
 
         // 寫檔案
-        System.IO.File.WriteAllText(outputFileName.Replace(".txt", ".sql"), sqlText);
+        System.IO.File.WriteAllText(outputFileName, sqlText);
     }
 }

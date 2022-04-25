@@ -33,4 +33,15 @@ public class Helper
             dir.Delete(true);
         }
     }
+
+    public static void DeleteFile(string filePath)
+    {
+        FileInfo file = new(filePath);
+        if (!file.Exists)
+        {
+            Console.WriteLine($"{filePath} 檔案不存在");
+            return;
+        }
+        file.Delete();
+    }
 }

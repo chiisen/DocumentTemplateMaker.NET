@@ -19,6 +19,9 @@
     <None Update="DocumentTemplate\DocumentTemplate-2.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="DocumentTemplate\INSERT-WAGERS.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DocumentTemplate\INSERT.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
