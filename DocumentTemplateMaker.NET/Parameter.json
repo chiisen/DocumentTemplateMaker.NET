@@ -17,14 +17,14 @@
     "TempType": "Replace",
     "SrcTempPath": [ ".\\DocumentTemplate\\Replace.txt" ],
     "OutputPath": [  ".\\output\\jsonOutput.txt" ],
-    "KeyWords": [     "#Wid_Parent#", "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#",       "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#", "#DBId#", "#ClientType#", "#HallId#" ],
-    "ReplaceWords": [ "NULL",         "0",        "NULL",          "1",         "0",         "Testmax",    "NMmojricWEyG", "0",     "0",        "0",        "0",            "",         "0",      "0",            "A0cC0dWyt1iy" ]
+    "KeyWords": [     "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#",       "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#", "#DBId#", "#ClientType#", "#HallId#" ],
+    "ReplaceWords": [ "0",        "NULL",          "1",         "0",         "Testmax",    "NMmojricWEyG", "0",     "0",        "0",        "0",            "",         "0",      "0",            "A0cC0dWyt1iy" ]
   },
   {
     "TempType": "ReplaceJsonMap",
     "SrcTempPath": [ ".\\DocumentTemplate\\ReplaceJsonMap.txt" ],
     "OutputPath": [  ".\\output\\" ],
-    "KeyWords": [     "#Wid_Parent#", "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#",       "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#",  "#DBId#", "#ClientType#", "#HallId#" ,    "#CreateTime#"],
-    "ReplaceWords": [ "NULL",         "1",        "168",           "1",         "0",         "45825506449","5rM04yQmDolB", "0",     "0",        "0",        "0",            "2022-04-23","0",      "0",            "wdArlv5q1l3n", "2022-04-27 00:00:00" ]
+    "KeyWords": [     "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#",       "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#",  "#DBId#", "#ClientType#", "#HallId#"     ],
+    "ReplaceWords": [ "1",        "168",           "1",         "0",         "45825506449","5rM04yQmDolB", "0",     "0",        "0",        "0",            "2022-04-23","0",      "0",            "wdArlv5q1l3n" ]
   }
 ]
