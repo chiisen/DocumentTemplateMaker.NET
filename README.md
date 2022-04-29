@@ -19,4 +19,7 @@ DocumentTemplateMaker.NET.exe JsonMap
 DocumentTemplateMaker.NET.exe Replace  
 置換文件內指定字串符號為我們設定的內容  
 
-
+# ReplaceJsonMap
+執行程式後面帶參數 ReplaceJsonMap 如下: 
+DocumentTemplateMaker.NET.exe ReplaceJsonMap
+JsonMap + Replace 功能組合
