@@ -25,6 +25,6 @@
     "SrcTempPath": [ ".\\DocumentTemplate\\ReplaceJsonMap.txt" ],
     "OutputPath": [  ".\\output\\" ],
     "KeyWords": [     "#Repair#", "#PlatformWid#", "#IsValid#", "#JPTxnId#", "#UserName#", "#UpId#",       "#Rid#", "#ShoeNo#", "#PlayNo#", "#GameTypeId#", "#Result#",  "#DBId#", "#ClientType#", "#HallId#"     ],
-    "ReplaceWords": [ "1",        "168",           "1",         "0",         "45825506449","5rM04yQmDolB", "0",     "0",        "0",        "0",            "2022-04-23","0",      "0",            "wdArlv5q1l3n" ]
+    "ReplaceWords": [ "1",        "80001", "1", "0", "ss00110377072", "5rM04yQmDolB", "0", "0", "0", "0", "2022-04-27", "0", "0", "wdArlv5q1l3n" ]
   }
 ]
