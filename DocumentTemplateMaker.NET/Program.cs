@@ -67,6 +67,9 @@ class Program
                 break;
             case "ReplaceJsonMap":
                 ReplaceJsonMap.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
+
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
+                Console.WriteLine("請記得更新 Parameter.json 裡的 KeyWords 與 ReplaceWords(這些有些資料是 ReplaceJsonMap.txt 上查不到的!)");
                 break;
         }
 
