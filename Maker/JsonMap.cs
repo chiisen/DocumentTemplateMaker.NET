@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
 namespace DocumentTemplateMaker.NET;
@@ -9,7 +10,7 @@ public class JsonMap
     public static void Maker(string tempFileName, string outputFileName, bool deleteAll = true)
     {
         // 讀檔案
-        string text = System.IO.File.ReadAllText(tempFileName);
+        string text = File.ReadAllText(tempFileName);
         //text = text.Replace(" ", "");
         text = text.Replace("\r\n", "");
 
@@ -99,11 +100,11 @@ public class JsonMap
         }
 
         // 寫檔案
-        System.IO.File.WriteAllText(outputFileName, newText);
+       File.WriteAllText(outputFileName, newText);
 
 
         // 讀檔案
-        string sqlText = System.IO.File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
+        string sqlText = File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
         foreach (KeyValuePair<string, string> item in map_)
         {
             string keyword_ = string.Format("#{0}#", item.Key);
@@ -123,6 +124,6 @@ public class JsonMap
         }
 
         // 寫檔案
-        System.IO.File.WriteAllText(outputFileName, sqlText);
+        File.WriteAllText(outputFileName, sqlText);
     }
 }

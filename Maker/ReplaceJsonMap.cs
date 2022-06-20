@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IO;
 
 namespace DocumentTemplateMaker.NET;
 
@@ -8,7 +7,7 @@ internal class ReplaceJsonMap
     public static void Maker(string tempFileName, string outputFileName, Parameter para)
     {
         // 讀檔案
-        string text = System.IO.File.ReadAllText(tempFileName);
+        string text = File.ReadAllText(tempFileName);
 
         // 砍擋
         Helper.DeleteAll(".\\output\\");
@@ -22,7 +21,7 @@ internal class ReplaceJsonMap
         {
             // 寫檔案
             string tempInputTxt_ = outputFileName + "input" + count.ToString() + ".txt";
-            System.IO.File.WriteAllText(tempInputTxt_, line_);
+            File.WriteAllText(tempInputTxt_, line_);
 
             string tempOutputTxt_ = outputFileName + "output" + count.ToString() + ".txt";            
             JsonMap.Maker(tempInputTxt_, tempOutputTxt_, false);
@@ -39,7 +38,7 @@ internal class ReplaceJsonMap
             Helper.DeleteFile(tempInoutSql_);
 
             // 讀檔案
-            string txtAll = System.IO.File.ReadAllText(tempOutputSql_);
+            string txtAll = File.ReadAllText(tempOutputSql_);
             all_ += txtAll;
 
             // 砍擋
@@ -49,6 +48,6 @@ internal class ReplaceJsonMap
         }
 
         // 寫檔案
-        System.IO.File.WriteAllText(outputFileName + "alter.sql", all_);
+        File.WriteAllText(outputFileName + "alter.sql", all_);
     }
 }

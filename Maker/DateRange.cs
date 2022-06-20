@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
 namespace DocumentTemplateMaker.NET;
@@ -66,7 +66,7 @@ public class DateRange
 
         fileName = fileName.Replace("#-#", "-");
 
-        System.IO.File.WriteAllText(fileName, newText);
+        File.WriteAllText(fileName, newText);
     }
 
     public static void ReplaceByDay(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt)
@@ -121,7 +121,7 @@ public class DateRange
             fileName = fileName.Replace("#-#", "");
         }
 
-        System.IO.File.WriteAllText(fileName, newText);
+        File.WriteAllText(fileName, newText);
     }
 
     public static void ReplaceData(string fileName, string newText, DateTime dt, int offSet, DateTime offsetDt, string offSetUnit)
@@ -160,7 +160,7 @@ public class DateRange
     public static void Maker(string tempFileName, string outputFileName, string startDate, string endDate, int offSet, string offSetUnit)
     {
         // 讀檔案
-        string text = System.IO.File.ReadAllText(tempFileName);
+        string text = File.ReadAllText(tempFileName);
 
         DateTime start = Convert.ToDateTime(startDate);
         DateTime end = Convert.ToDateTime(endDate);

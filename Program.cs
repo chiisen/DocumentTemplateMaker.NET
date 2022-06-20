@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using Serilog;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
 namespace DocumentTemplateMaker.NET;
@@ -36,15 +37,17 @@ class Program
         ) // 輸出到檔案 檔名範例: log-20211005.log
         .CreateLogger();
 
+        /*
         Log.Verbose("Hello");
         Log.Debug("Hello");
         Log.Information("Hello");
         Log.Warning("Hello");
         Log.Error("Hello");
         Log.Fatal("Hello");
+        */
 
         // 讀檔案
-        string parameter_ = System.IO.File.ReadAllText(@".\Parameter.json");
+        string parameter_ = File.ReadAllText(@".\Parameter.json");
         List<Parameter> descArray_ = JsonConvert.DeserializeObject<List<Parameter>>(parameter_);
         Dictionary<string, Parameter> dic_ = descArray_.ToDictionary(x => x.TempType, x => x);
         Parameter desc_ = dic_[args[0]];
