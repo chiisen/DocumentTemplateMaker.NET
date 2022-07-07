@@ -102,6 +102,79 @@ public class JsonMap
         // 寫檔案
        File.WriteAllText(outputFileName, newText);
 
+        // 顯示沒讀到的欄位
+        Dictionary<string, bool> totalFields = new Dictionary<string, bool>() {
+        {"Wid",false},
+        {"Cid",false},
+        {"UserName",false},
+        {"UpId",false},
+        {"HallId",false},
+        {"Rid",false},
+        {"ShoeNo",false},
+        {"PlayNo",false},
+        {"GGId",false},
+        {"GameId",false},
+        {"GameTypeId",false},
+        {"Result",false},
+        {"BetGold",false},
+        {"BetPoint",false},
+        {"WinGold",false},
+        {"WinPoint",false},
+        {"RealBetPoint",false},
+        {"RealBetGold",false},
+        {"JPPoint",false},
+        {"JPGold",false},
+        {"JPConGold",false},
+        {"JPConGoldOriginal",false},
+        {"JPConPoint",false},
+        {"JPConPointOriginal",false},
+        {"OldQuota",false},
+        {"NewQuota",false},
+        {"Currency",false},
+        {"ExCurrency",false},
+        {"CryDef",false},
+        {"IsDemo",false},
+        {"IsSingleWallet",false},
+        {"IsFreeGame",false},
+        {"JPTxnId",false},
+        {"IsBonusGame",false},
+        {"IsJP",false},
+        {"JPType",false},
+        {"AddDate",false},
+        {"IP",false},
+        {"DBId",false},
+        {"ClientType",false},
+        {"Wid_Parent",false},
+        {"Repair",false},
+        {"roundID",false},
+        {"CreateTime",false},
+        {"JPPoolId",false},
+        {"Denom",false},
+        {"PlatformWid",false},
+        {"CycleId",false},
+        {"IsValid",false},
+        };
+
+        foreach (KeyValuePair<string, string> item in map_)
+        {
+            if(totalFields.ContainsKey(item.Key))
+            {
+                totalFields[item.Key] = true;
+            }
+        }
+
+        string totalLostFields = "\n";
+        foreach (KeyValuePair<string, bool> item in totalFields)
+        {
+            if (!item.Value)
+            {
+                totalLostFields += item.Key + "\n";
+            }
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine("目前沒有的欄位:" + totalLostFields);
+        Console.ForegroundColor = ConsoleColor.White;
 
         // 讀檔案
         string sqlText = File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
