@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
 namespace DocumentTemplateMaker.NET;
@@ -100,9 +103,89 @@ public class JsonMap
         }
 
         // 寫檔案
-       File.WriteAllText(outputFileName, newText);
+        File.WriteAllText(outputFileName, newText);
+
+
+        // 分析log得到的
+        LogToMap(map_);
+
 
         // 顯示沒讀到的欄位
+        Dictionary<string, bool> totalFields = TotalLostFields(map_);
+
+
+        string totalLostFields = "\n";
+        foreach (KeyValuePair<string, bool> item in totalFields)
+        {
+            if (!item.Value)
+            {
+                totalLostFields += item.Key + "\n";
+            }
+        }
+
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.WriteLine("目前沒有的欄位:" + totalLostFields);
+        Console.ForegroundColor = ConsoleColor.White;
+
+
+        // 讀檔案
+        string sqlText = File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
+        foreach (KeyValuePair<string, string> item in map_)
+        {
+            string keyword_ = string.Format("#{0}#", item.Key);
+            
+
+            if (int.TryParse(item.Value, out int n)
+                || float.TryParse(item.Value, out float f)
+                || item.Value.ToLower() == "false"
+                || item.Value.ToLower() == "true")
+            {
+                sqlText = sqlText.Replace(keyword_, item.Value);
+            }
+            else
+            {
+                sqlText = sqlText.Replace(keyword_, '"' + item.Value + '"');
+            }
+        }
+
+        // 寫檔案
+        File.WriteAllText(outputFileName, sqlText);
+    }
+
+    /// <summary>
+    /// 分析log得到的
+    /// </summary>
+    private static void LogToMap(Dictionary<string, string> map)
+    {
+        // Wid, Cid, UserName, UpId, HallId, Rid, ShoeNo, PlayNo, GGId, GameId, GameTypeId, Result, BetGold, BetPoint, WinGold, WinPoint, RealBetPoint, RealBetGold, JPPoint, JPGold, JPConGold, JPConGoldOriginal, JPConPoint, JPConPointOriginal, OldQuota, NewQuota, Currency, ExCurrency, CryDef, IsDemo, IsSingleWallet, IsFreeGame, JPTxnId, IsBonusGame, IsJP, JPType, AddDate, IP, DBId, ClientType, Repair, roundID, JPPoolId, Denom, PlatformWid, CycleId, IsValid
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage(@"./output/debug.xlsx"))
+        {
+            var sheet = package.Workbook.Worksheets.Add("分析log得到的");
+            int count = 1;
+            foreach (KeyValuePair<string, string> item in map)
+            {
+                string cellsKey = "A" + count.ToString();
+                string cellsValue = "B" + count.ToString();
+
+                sheet.Cells[cellsKey].Value = item.Key;
+                sheet.Cells[cellsValue].Value = item.Value;
+
+                count++;
+            }
+
+            // Save to file
+            package.Save();
+        }
+    }
+
+    /// <summary>
+    /// 判斷沒讀到的欄位
+    /// </summary>
+    /// <param name="map"></param>
+    /// <returns></returns>
+    private static Dictionary<string, bool> TotalLostFields(Dictionary<string, string> map)
+    {
         Dictionary<string, bool> totalFields = new Dictionary<string, bool>() {
         {"Wid",false},
         {"Cid",false},
@@ -155,48 +238,52 @@ public class JsonMap
         {"IsValid",false},
         };
 
-        foreach (KeyValuePair<string, string> item in map_)
+        foreach (KeyValuePair<string, string> item in map)
         {
-            if(totalFields.ContainsKey(item.Key))
+            if (totalFields.ContainsKey(item.Key))
             {
                 totalFields[item.Key] = true;
             }
         }
 
-        string totalLostFields = "\n";
-        foreach (KeyValuePair<string, bool> item in totalFields)
+
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage(@"./output/debug.xlsx"))
         {
-            if (!item.Value)
+            var sheet = package.Workbook.Worksheets.Add("目前沒有的欄位");
+            int count = 1;
+            foreach (KeyValuePair<string, bool> item in totalFields)
             {
-                totalLostFields += item.Key + "\n";
+                string cellsKey = "A" + count.ToString();
+                string cellsValue = "B" + count.ToString();
+
+                sheet.Cells[cellsKey].Value = item.Key;
+                sheet.Cells[cellsValue].Value = item.Value;
+
+                sheet.Cells[cellsKey].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                       // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                sheet.Cells[cellsValue].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                       // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                if (!item.Value)
+                {
+                    sheet.Cells[cellsKey].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                    sheet.Cells[cellsValue].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                }
+                else
+                {
+                    sheet.Cells[cellsKey].Style.Fill.BackgroundColor.SetColor(Color.Green); // 儲存格顏色
+                    sheet.Cells[cellsValue].Style.Fill.BackgroundColor.SetColor(Color.Green); // 儲存格顏色
+                }
+
+                count++;
             }
+
+            // Save to file
+            package.Save();
         }
 
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.WriteLine("目前沒有的欄位:" + totalLostFields);
-        Console.ForegroundColor = ConsoleColor.White;
-
-        // 讀檔案
-        string sqlText = File.ReadAllText(".\\DocumentTemplate\\INSERT-WAGERS.sql");
-        foreach (KeyValuePair<string, string> item in map_)
-        {
-            string keyword_ = string.Format("#{0}#", item.Key);
-            
-
-            if (int.TryParse(item.Value, out int n)
-                || float.TryParse(item.Value, out float f)
-                || item.Value.ToLower() == "false"
-                || item.Value.ToLower() == "true")
-            {
-                sqlText = sqlText.Replace(keyword_, item.Value);
-            }
-            else
-            {
-                sqlText = sqlText.Replace(keyword_, '"' + item.Value + '"');
-            }
-        }
-
-        // 寫檔案
-        File.WriteAllText(outputFileName, sqlText);
+        return totalFields;
     }
 }

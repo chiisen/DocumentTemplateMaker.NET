@@ -1,4 +1,7 @@
 ﻿using System.IO;
+using System.Drawing;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace DocumentTemplateMaker.NET;
 
@@ -11,6 +14,17 @@ internal class ReplaceJsonMap
 
         // 砍擋
         Helper.DeleteAll(".\\output\\");
+
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage(@"./output/debug.xlsx"))
+        {
+            var sheet = package.Workbook.Worksheets.Add("分析的log內容ReplaceJsonMap.txt");
+
+            sheet.Cells["A1"].Value = text;
+
+            // Save to file
+            package.Save();
+        }
 
         string[] lines_ = text.Split("\r\n");
 
