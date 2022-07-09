@@ -157,7 +157,6 @@ public class JsonMap
     /// </summary>
     private static void LogToMap(Dictionary<string, string> map)
     {
-        // Wid, Cid, UserName, UpId, HallId, Rid, ShoeNo, PlayNo, GGId, GameId, GameTypeId, Result, BetGold, BetPoint, WinGold, WinPoint, RealBetPoint, RealBetGold, JPPoint, JPGold, JPConGold, JPConGoldOriginal, JPConPoint, JPConPointOriginal, OldQuota, NewQuota, Currency, ExCurrency, CryDef, IsDemo, IsSingleWallet, IsFreeGame, JPTxnId, IsBonusGame, IsJP, JPType, AddDate, IP, DBId, ClientType, Repair, roundID, JPPoolId, Denom, PlatformWid, CycleId, IsValid
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         using (var package = new ExcelPackage(@"./output/debug.xlsx"))
         {
@@ -177,6 +176,66 @@ public class JsonMap
             // Save to file
             package.Save();
         }
+
+        using (var package = new ExcelPackage(@"./output/debug.xlsx"))
+        {
+            var sheet = package.Workbook.Worksheets.Add("整理過的");
+            int count = 1;
+            List<string>  list = GetSortList();
+            foreach (string item in list)
+            {
+                sheet.Cells[1, count].Value = item;
+
+                if(map.ContainsKey(item))
+                {
+                    sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                    sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+
+                    sheet.Cells[2, count].Value = map[item];
+
+                    sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                    sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                }
+                else
+                {
+                    sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                    sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+
+                    sheet.Cells[2, count].Value = "";
+
+                    sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                    sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                }
+
+                count++;
+            }
+
+            // Save to file
+            package.Save();
+        }
+
+        
+    }
+
+    private static List<string> GetSortList()
+    {
+        List<string> sortList = new List<string>()
+        {
+            "Wid", "Cid", "UserName", "UpId", "HallId", "Rid", "ShoeNo", "PlayNo", "GGId","GameId", "GameTypeId", "Result", "BetGold",
+            "BetPoint", "WinGold", "WinPoint", "RealBetPoint", "RealBetGold", "JPPoint", "JPGold", "JPConGold", "JPConGoldOriginal",
+            "JPConPoint", "PConPointOriginal", "OldQuota", "NewQuota", "Currency", "ExCurrency", "CryDef", "IsDemo", "IsSingleWallet",
+            "IsFreeGame", "JPTxnId", "IsBonusGame", "IsJP", "JPType", "AddDate", "IP", "DBId", "ClientType", "Repair", "roundID",
+            "JPPoolId", "Denom", "PlatformWid", "CycleId", "IsValid"
+        };
+        return sortList;
     }
 
     /// <summary>
