@@ -38,7 +38,7 @@ internal class ReplaceJsonMap
             File.WriteAllText(tempInputTxt_, line_);
 
             string tempOutputTxt_ = outputFileName + "output" + count.ToString() + ".txt";            
-            JsonMap.Maker(tempInputTxt_, tempOutputTxt_, false);
+            JsonMap.Maker(tempInputTxt_, tempOutputTxt_, para, false);
 
             // 砍擋
             Helper.DeleteFile(tempInputTxt_);

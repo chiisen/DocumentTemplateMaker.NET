@@ -10,7 +10,7 @@ namespace DocumentTemplateMaker.NET;
 
 public class JsonMap
 {
-    public static void Maker(string tempFileName, string outputFileName, bool deleteAll = true)
+    public static void Maker(string tempFileName, string outputFileName, Parameter para, bool deleteAll = true)
     {
         // 讀檔案
         string text = File.ReadAllText(tempFileName);
@@ -78,7 +78,7 @@ public class JsonMap
                     {
                         map_.Add(mapLine_[0], mapLine_[1]);
                     }
-                }                
+                }
             }
         }
 
@@ -107,7 +107,7 @@ public class JsonMap
 
 
         // 分析log得到的
-        LogToMap(map_);
+        LogToMap(map_, para);
 
 
         // 顯示沒讀到的欄位
@@ -133,7 +133,7 @@ public class JsonMap
         foreach (KeyValuePair<string, string> item in map_)
         {
             string keyword_ = string.Format("#{0}#", item.Key);
-            
+
 
             if (int.TryParse(item.Value, out int n)
                 || float.TryParse(item.Value, out float f)
@@ -155,7 +155,7 @@ public class JsonMap
     /// <summary>
     /// 分析log得到的
     /// </summary>
-    private static void LogToMap(Dictionary<string, string> map)
+    private static void LogToMap(Dictionary<string, string> map, Parameter para)
     {
         ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         using (var package = new ExcelPackage(@"./output/debug.xlsx"))
@@ -177,16 +177,34 @@ public class JsonMap
             package.Save();
         }
 
+
+        Dictionary<string, string> replaceMap = new Dictionary<string, string>();
+        for (int i = 0; i < para.KeyWords.Length; ++i)
+        {
+            string key = para.KeyWords[i].Replace("#", "");
+            if(!replaceMap.ContainsKey(key))
+            {
+                replaceMap.Add(key, para.ReplaceWords[i]);
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("KeyWords 重複了:" + key);
+                Console.ForegroundColor = ConsoleColor.White;
+            }
+        }
+            
+
         using (var package = new ExcelPackage(@"./output/debug.xlsx"))
         {
             var sheet = package.Workbook.Worksheets.Add("整理過的");
             int count = 1;
-            List<string>  list = GetSortList();
+            List<string> list = GetSortList();
             foreach (string item in list)
             {
                 sheet.Cells[1, count].Value = item;
 
-                if(map.ContainsKey(item))
+                if (map.ContainsKey(item))
                 {
                     sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
                                                                                          // Solid = 填滿；另外還有斜線、交叉線、條紋等
@@ -202,17 +220,35 @@ public class JsonMap
                 }
                 else
                 {
-                    sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+                    if(replaceMap.ContainsKey(item))
+                    {
+                        sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
 
-                    sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                        sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
 
-                    sheet.Cells[2, count].Value = "";
+                        sheet.Cells[2, count].Value = replaceMap[item];
 
-                    sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
+                        sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
 
-                    sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                        sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                    }
+                    else
+                    {
+                        sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                        sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.DarkRed); // 儲存格顏色
+
+                        sheet.Cells[2, count].Value = "";
+
+                        sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+                        sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.DarkRed); // 儲存格顏色
+                    }
+                    
                 }
 
                 count++;
@@ -222,7 +258,7 @@ public class JsonMap
             package.Save();
         }
 
-        
+
     }
 
     private static List<string> GetSortList()
@@ -231,7 +267,7 @@ public class JsonMap
         {
             "Wid", "Cid", "UserName", "UpId", "HallId", "Rid", "ShoeNo", "PlayNo", "GGId","GameId", "GameTypeId", "Result", "BetGold",
             "BetPoint", "WinGold", "WinPoint", "RealBetPoint", "RealBetGold", "JPPoint", "JPGold", "JPConGold", "JPConGoldOriginal",
-            "JPConPoint", "PConPointOriginal", "OldQuota", "NewQuota", "Currency", "ExCurrency", "CryDef", "IsDemo", "IsSingleWallet",
+            "JPConPoint", "JPConPointOriginal", "OldQuota", "NewQuota", "Currency", "ExCurrency", "CryDef", "IsDemo", "IsSingleWallet",
             "IsFreeGame", "JPTxnId", "IsBonusGame", "IsJP", "JPType", "AddDate", "IP", "DBId", "ClientType", "Repair", "roundID",
             "JPPoolId", "Denom", "PlatformWid", "CycleId", "IsValid"
         };
@@ -320,7 +356,7 @@ public class JsonMap
                 sheet.Cells[cellsValue].Value = item.Value;
 
                 sheet.Cells[cellsKey].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                       // Solid = 填滿；另外還有斜線、交叉線、條紋等
+                                                                                     // Solid = 填滿；另外還有斜線、交叉線、條紋等
 
                 sheet.Cells[cellsValue].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
                                                                                        // Solid = 填滿；另外還有斜線、交叉線、條紋等
