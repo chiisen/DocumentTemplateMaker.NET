@@ -61,12 +61,9 @@ public class Replace
 
             sheet.Cells["A1"].Value = "KeyWords";
             sheet.Cells["B1"].Value = "ReplaceWords";
-            sheet.Cells["A1"].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-            sheet.Cells["B1"].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-            sheet.Cells["A1"].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
-            sheet.Cells["B1"].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+
+            Helper.SetCellsColor(sheet.Cells["A1"], Color.DarkGray);
+            Helper.SetCellsColor(sheet.Cells["B1"], Color.DarkGray);
 
             int count = 2;
             for (int i = 0; i < para.KeyWords.Length; ++i)

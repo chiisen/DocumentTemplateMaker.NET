@@ -1,4 +1,7 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
+using System.Drawing;
 using System.IO;
 
 // C# 10 全新的 namespace 語法，不用再看到 namespace 的 { } 了！
@@ -43,5 +46,13 @@ public class Helper
             return;
         }
         file.Delete();
+    }
+
+    public static void SetCellsColor(ExcelRange range, Color color)
+    {
+        range.Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
+                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
+
+        range.Style.Fill.BackgroundColor.SetColor(color); // 儲存格顏色
     }
 }

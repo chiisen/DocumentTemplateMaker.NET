@@ -206,47 +206,29 @@ public class JsonMap
 
                 if (map.ContainsKey(item))
                 {
-                    sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                    sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                    Helper.SetCellsColor(sheet.Cells[1, count], Color.DarkGray);
 
                     sheet.Cells[2, count].Value = map[item];
 
-                    sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                         // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                    sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                    Helper.SetCellsColor(sheet.Cells[2, count], Color.DarkGray);
                 }
                 else
                 {
                     if(replaceMap.ContainsKey(item))
                     {
-                        sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                        sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                        Helper.SetCellsColor(sheet.Cells[1, count], Color.Yellow);
 
                         sheet.Cells[2, count].Value = replaceMap[item];
 
-                        sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                        sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.Yellow); // 儲存格顏色
+                        Helper.SetCellsColor(sheet.Cells[2, count], Color.Yellow);
                     }
                     else
                     {
-                        sheet.Cells[1, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                        sheet.Cells[1, count].Style.Fill.BackgroundColor.SetColor(Color.DarkRed); // 儲存格顏色
+                        Helper.SetCellsColor(sheet.Cells[1, count], Color.DarkRed);
 
                         sheet.Cells[2, count].Value = "";
 
-                        sheet.Cells[2, count].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                             // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                        sheet.Cells[2, count].Style.Fill.BackgroundColor.SetColor(Color.DarkRed); // 儲存格顏色
+                        Helper.SetCellsColor(sheet.Cells[2, count], Color.DarkRed);
                     }
                     
                 }
@@ -355,21 +337,15 @@ public class JsonMap
                 sheet.Cells[cellsKey].Value = item.Key;
                 sheet.Cells[cellsValue].Value = item.Value;
 
-                sheet.Cells[cellsKey].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                     // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
-                sheet.Cells[cellsValue].Style.Fill.PatternType = ExcelFillStyle.Solid; // 設定背景填色方法，沒有這一行就上背景色會報錯
-                                                                                       // Solid = 填滿；另外還有斜線、交叉線、條紋等
-
                 if (!item.Value)
                 {
-                    sheet.Cells[cellsKey].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
-                    sheet.Cells[cellsValue].Style.Fill.BackgroundColor.SetColor(Color.DarkGray); // 儲存格顏色
+                    Helper.SetCellsColor(sheet.Cells[cellsKey], Color.DarkGray);
+                    Helper.SetCellsColor(sheet.Cells[cellsValue], Color.DarkGray);
                 }
                 else
                 {
-                    sheet.Cells[cellsKey].Style.Fill.BackgroundColor.SetColor(Color.Green); // 儲存格顏色
-                    sheet.Cells[cellsValue].Style.Fill.BackgroundColor.SetColor(Color.Green); // 儲存格顏色
+                    Helper.SetCellsColor(sheet.Cells[cellsKey], Color.Green);
+                    Helper.SetCellsColor(sheet.Cells[cellsValue], Color.Green);
                 }
 
                 count++;
