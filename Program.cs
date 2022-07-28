@@ -63,7 +63,7 @@ class Program
                 }
                 break;
             case "JsonMap":
-                JsonMap.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0]);
+                JsonMap.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
                 break;
             case "Replace":
                 Replace.Maker(desc_.SrcTempPath[0], desc_.OutputPath[0], desc_);
